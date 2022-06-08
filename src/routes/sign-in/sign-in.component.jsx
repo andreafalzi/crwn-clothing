@@ -9,7 +9,7 @@ const SignIn = () => {
     () =>
       async function logGoogleRedirectUser() {
         const response = await getRedirectResult(auth);
-        console.log(response);
+        // console.log(response);
         if (response) {
           // eslint-disable-next-line no-unused-vars
           const userDocRef = await createUserDocumentFromAuth(response.user);
