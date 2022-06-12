@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -43,8 +43,10 @@ export const signInWitFacebookRedirect = () => signInWithRedirect(auth, facebook
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+//additionalInfos is an extra argument that is needed for our SignUp w/o using a service provider
+export const createUserDocumentFromAuth = async (userAuth, additionalInfos = {}) => {
   // doc() call from the database=db a collection='users' and looking for the document with the uniqueID=userAuth.uid
+  if (!userAuth) return;
   const userDocRef = doc(db, 'users', userAuth.uid);
 
   //getDoc retrive the document and we use the method .exists() to check if the document is already inside the collection 'users'
@@ -55,8 +57,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   //if user data does not exist
   //create / set the document with the data from userAuth in my collection
   if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
-    const providerData = userAuth.providerData[0].providerId;
+    const { displayName, email, providerData } = userAuth;
+    const providerDataId = providerData[0].providerId;
     const createdAt = new Date();
 
     try {
@@ -65,7 +67,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         displayName,
         email,
         createdAt,
-        providerData,
+        providerDataId,
+        ...additionalInfos, //this is needed for the SignUp w/o using a provider service, because in the response we don't get the displayName value so we have to manually add it
       });
     } catch (error) {
       console.log('error creating the user', error.message);
@@ -75,4 +78,16 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   //if user data exist
   //return userDocRef
   return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
 };
