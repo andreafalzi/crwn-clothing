@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import FormInput from '../form-input/form-input.component';
 
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utilities/firebase/firebase.utilities';
+//replaced by a Firebase method call onAuthStateChanged
+// import { UserContext } from '../../contexts/user.context';
 
 import './sign-up-form.style.scss';
 import Button from '../button/button.component';
@@ -18,6 +20,9 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultformFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+  //replaced by a Firebase method call onAuthStateChanged
+  // const { setCurrentUser } = useContext(UserContext);
+
   const resetFormFields = () => {
     setFormFields(defaultformFields);
   };
@@ -30,6 +35,8 @@ const SignUpForm = () => {
     }
     try {
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
+      //replaced by a Firebase method call onAuthStateChanged
+      // setCurrentUser(user);
 
       //display name is an obj that we have add in the prev createuserDocumentFromAuth method to get the user displayName
       await createUserDocumentFromAuth(user, { displayName });
