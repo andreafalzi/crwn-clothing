@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 
 import { signInAuthUserWithEmailAndPassword } from '../../utilities/firebase/firebase.utilities';
 
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
 //replaced by a Firebase method call onAuthStateChanged
@@ -60,7 +60,7 @@ const SignInForm = ({ loginMethod }) => {
         <FormInput labelName='password' type='password' required onChange={handleChange} name='password' value={password} />
         <div className='buttons-container'>
           <Button type='submit'>Sign In</Button>
-          <Button type='button' buttonType='google' onClick={loginMethod}>
+          <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={loginMethod}>
             Google Sign In
           </Button>
         </div>
