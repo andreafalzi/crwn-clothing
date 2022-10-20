@@ -1,12 +1,12 @@
-import './form-input.style.scss';
+import { FormInputLabel, Input, Group } from './form-input.style';
 
 const FormInput = ({ labelName, ...otherProps }) => {
   return (
-    <div className='group'>
-      <input className='form-input' {...otherProps} />
+    <Group>
+      <Input {...otherProps} />
       {/* another way to write if statement argumentToCheck && (result). It means that if the argument exist go on and show me the result*/}
-      {labelName && <label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>{labelName}</label>}
-    </div>
+      {labelName && <FormInputLabel shrink={otherProps.value.length}>{labelName}</FormInputLabel>}
+    </Group>
   );
 };
 
