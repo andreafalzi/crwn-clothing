@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import './checkout-item.style.scss';
+import { CheckoutItemContainer } from './checkout-item.style';
 
 import { ReactComponent as RightArrow } from '../../assets/rightArrow.svg';
 import { ReactComponent as LeftArrow } from '../../assets/leftArrow.svg';
@@ -10,7 +10,7 @@ const CheckoutItem = ({ cartItem }) => {
   const { addItemToCart, removeItemToCart, clearItemFromCart } = useContext(CartContext);
   const { name, imageUrl, price, quantity } = cartItem;
   return (
-    <div className='checkout-item-container'>
+    <CheckoutItemContainer>
       <div className='image-container'>
         <img src={imageUrl} alt={name} />
       </div>
@@ -24,7 +24,7 @@ const CheckoutItem = ({ cartItem }) => {
       <div className='remove-button' onClick={() => clearItemFromCart(cartItem)}>
         &#10005;
       </div>
-    </div>
+    </CheckoutItemContainer>
   );
 };
 

@@ -8,7 +8,7 @@ import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 //replaced by a Firebase method call onAuthStateChanged
 // import { UserContext } from '../../contexts/user.context';
 
-import './authentication.style.scss';
+import { AuthContainer } from './authentication.style';
 
 const Authentication = () => {
   //replaced by a Firebase method call onAuthStateChanged
@@ -43,7 +43,7 @@ const Authentication = () => {
     // setCurrentUser(user);
   };
   return (
-    <div className='auth-container'>
+    <AuthContainer>
       <SignInForm loginMethod={logGoogleUser} />
       {/* <Button buttonType='google' onClick={logGoogleUser}>
         Sign in with Google
@@ -51,7 +51,7 @@ const Authentication = () => {
       {/* <button onClick={signInWithGoogleRedirect}>Sign in with Google Redirect</button>
       <button onClick={logFacebookUser}>Sign in with Facebook Popus</button> */}
       <SignUpForm />
-    </div>
+    </AuthContainer>
   );
 };
 

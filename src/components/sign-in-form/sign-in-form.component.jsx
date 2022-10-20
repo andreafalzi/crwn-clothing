@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import { signInAuthUserWithEmailAndPassword } from '../../utilities/firebase/firebase.utilities';
 
@@ -8,7 +8,7 @@ import FormInput from '../form-input/form-input.component';
 //replaced by a Firebase method call onAuthStateChanged
 // import { UserContext } from '../../contexts/user.context';
 
-import './sign-in-form.style.scss';
+import { SignInContainer, ButtonsContainer } from './sign-in-form.style';
 
 const defaultformFields = {
   email: '',
@@ -52,20 +52,20 @@ const SignInForm = ({ loginMethod }) => {
   };
 
   return (
-    <div className='sign-in-container'>
+    <SignInContainer>
       <h2>I already have an account</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput labelName='email' type='text' required onChange={handleChange} name='email' value={email} />
         <FormInput labelName='password' type='password' required onChange={handleChange} name='password' value={password} />
-        <div className='buttons-container'>
+        <ButtonsContainer>
           <Button type='submit'>Sign In</Button>
           <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={loginMethod}>
             Google Sign In
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 
