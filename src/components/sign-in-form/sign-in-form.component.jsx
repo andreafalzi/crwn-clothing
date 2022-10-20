@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { signInAuthUserWithEmailAndPassword } from '../../utilities/firebase/firebase.utilities';
 
@@ -16,6 +17,7 @@ const defaultformFields = {
 };
 
 const SignInForm = ({ loginMethod }) => {
+  const navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultformFields);
   const { email, password } = formFields;
 
@@ -34,6 +36,7 @@ const SignInForm = ({ loginMethod }) => {
       // setCurrentUser(user);
 
       resetFormFields();
+      navigate('/');
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         alert('User does not exist!');

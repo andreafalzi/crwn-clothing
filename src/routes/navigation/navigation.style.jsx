@@ -6,13 +6,21 @@ export const NavigationContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
 `;
 
 export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
-  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    widht: 100%;
+    height: 100%;
+  }
 `;
 
 export const NavLinksContainer = styled.div`

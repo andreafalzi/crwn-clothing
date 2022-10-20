@@ -86,8 +86,8 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfos = {})
   //if user data does not exist
   //create / set the document with the data from userAuth in my collection
   if (!userSnapshot.exists()) {
-    const { displayName, email, providerData } = userAuth;
-    const providerDataId = providerData[0].providerId;
+    const { displayName, email } = userAuth;
+
     const createdAt = new Date();
 
     try {
@@ -96,7 +96,6 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfos = {})
         displayName,
         email,
         createdAt,
-        providerDataId,
         ...additionalInfos, //this is needed for the SignUp w/o using a provider service, because in the response we don't get the displayName value so we have to manually add it
       });
     } catch (error) {

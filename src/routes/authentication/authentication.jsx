@@ -9,8 +9,10 @@ import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 // import { UserContext } from '../../contexts/user.context';
 
 import { AuthContainer } from './authentication.style';
+import { useNavigate } from 'react-router-dom';
 
 const Authentication = () => {
+  const navigate = useNavigate();
   //replaced by a Firebase method call onAuthStateChanged
   // const { setCurrentUser } = useContext(UserContext);
 
@@ -30,7 +32,7 @@ const Authentication = () => {
   );
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
-
+    navigate('/');
     //replaced by a Firebase method call onAuthStateChanged
     // await createUserDocumentFromAuth(user);
     // setCurrentUser(user);

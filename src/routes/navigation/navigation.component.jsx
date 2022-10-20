@@ -28,7 +28,16 @@ const Navigation = () => {
         <LogoContainer to='/'>
           <CrwnLogo className='logo' />
         </LogoContainer>
+
         <NavLinksContainer>
+          {currentUser && (
+            <div>
+              Welcome,
+              <strong>
+                <em> {currentUser.displayName === null ? 'Guest' : currentUser.displayName}</em>
+              </strong>
+            </div>
+          )}
           <NavLink to='/shop'>SHOP</NavLink>
           {currentUser ? (
             <NavLink as='span' to='/auth' onClick={signOutUser}>
