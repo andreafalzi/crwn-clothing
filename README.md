@@ -1,5 +1,5 @@
 # Crwn clothing
-E-commerce concept about cloths and acceccorizes developed in React.
+E-commerce concept about clothes and accessories developed in React.
 
 
 ## Data
