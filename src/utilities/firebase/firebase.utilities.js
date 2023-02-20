@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'firebase/auth';
 
 import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -89,6 +89,15 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfos = {})
     const { displayName, email } = userAuth;
 
     const createdAt = new Date();
+
+    // getting displayname from the DB obj instead of null (check it)
+    await updateProfile(auth.currentUser, {
+      displayName: additionalInfos.displayName,
+    })
+      .then(() => {
+        console.log('profile updated!');
+      })
+      .catch((error) => console.log('error created', error));
 
     try {
       //setDoc crate the new document and we are passing an OBJ with the values and key that we want inside it
