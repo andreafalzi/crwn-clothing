@@ -21,13 +21,14 @@ export const CategoriesProvider = ({ children }) => {
   //   addCollectionAndDocuments('categories', SHOP_DATA);
   // }, []);
 
-  useEffect(() => {
-    const getCategoriesMap = async () => {
-      const categoryMap = await getCategoriesAndDocuments();
-      setCategoriesMap(categoryMap);
-    };
-    getCategoriesMap();
-  }, []);
+  //Migrating useContext to Redux
+  // useEffect(() => {
+  //   const getCategoriesMap = async () => {
+  //     const categoryMap = await getCategoriesAndDocuments();
+  //     setCategoriesMap(categoryMap);
+  //   };
+  //   getCategoriesMap();
+  // }, []);
 
   const value = { categoriesMap };
   return <CategoriesContext.Provider value={value}>{children}</CategoriesContext.Provider>;

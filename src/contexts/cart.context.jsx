@@ -1,138 +1,180 @@
-import { createContext, useEffect, useReducer } from 'react';
+// import { createContext, useReducer } from 'react';
 
-const addCartItem = (cartItems, productToAdd) => {
-  //find if cartItems contains productToAdd
-  const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
-  //If found, increment quantity
-  if (existingCartItem) {
-    return cartItems.map((cartItem) => (cartItem.id === productToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem));
-  }
-  //return new array with modified cartItems/ new cart item
-  return [...cartItems, { ...productToAdd, quantity: 1 }];
-};
+// import { createAction } from '../utilities/reducer/reducer.utilities';
 
-const removeCartItem = (cartItems, cartItemToRemove) => {
-  //find the cart item to remove
-  const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id);
-  //check if quantity is equal 1, if it is remove that item from the cart
-  if (existingCartItem.quantity === 1) {
-    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
-  }
-  //return back cartItems with matching cart item with reduced quantity
-  return cartItems.map((cartItem) => (cartItem.id === cartItemToRemove.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem));
-};
+// Migrate to Redux
+// const addCartItem = (cartItems, productToAdd) => {
+//   //find if cartItems contains productToAdd
+//   const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
+//   //If found, increment quantity
+//   if (existingCartItem) {
+//     return cartItems.map((cartItem) => (cartItem.id === productToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem));
+//   }
+//   //return new array with modified cartItems/ new cart item
+//   return [...cartItems, { ...productToAdd, quantity: 1 }];
+// };
 
-const clearCartItem = (cartItems, cartItemToClear) => {
-  return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
-};
+// const removeCartItem = (cartItems, cartItemToRemove) => {
+//   //find the cart item to remove
+//   const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id);
+//   //check if quantity is equal 1, if it is remove that item from the cart
+//   if (existingCartItem.quantity === 1) {
+//     return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
+//   }
+//   //return back cartItems with matching cart item with reduced quantity
+//   return cartItems.map((cartItem) => (cartItem.id === cartItemToRemove.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem));
+// };
 
-export const CartContext = createContext({
-  isCartOpen: false,
-  setIsCartOpen: () => {},
-  cartItems: [],
-  addItemToCart: () => {},
-  removeItemToCart: () => {},
-  clearItemFromCart: () => {},
-  cartCount: 0,
-  cartTotal: 0,
-});
+// const clearCartItem = (cartItems, cartItemToClear) => {
+//   return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+// };
+
+// Migration to Redux
+// export const CartContext = createContext({
+//   isCartOpen: false,
+//   setIsCartOpen: () => {},
+//   cartItems: [],
+//   addItemToCart: () => {},
+//   removeItemToCart: () => {},
+//   clearItemFromCart: () => {},
+//   cartCount: 0,
+//   cartTotal: 0,
+// });
 
 // create a Reducer function
 
-export const CART_ACTION_TYPE = {
-  SET_IS_OPEN_CART: 'SET_IS_OPEN_CART',
-  SET_CART_ITEMS: 'SET_CART_ITEMS',
-  SET_CART_COUNT: 'SET_CART_COUNT',
-  SET_CART_TOTAL: 'SET_CART_TOTAL',
-};
+// Migration to Redux
+// export const CART_ACTION_TYPE = {
+//   SET_IS_CART_OPEN: 'SET_IS_CART_OPEN',
+//   SET_CART_ITEMS: 'SET_CART_ITEMS',
+// };
 
-const cartReducer = (state, action) => {
-  const { type, payload } = action;
+// Migration to Redux
 
-  switch (type) {
-    case CART_ACTION_TYPE.SET_IS_OPEN_CART:
-      return {
-        ...state,
-        isCartOpen: payload,
-      };
-    case CART_ACTION_TYPE.SET_CART_ITEMS:
-      return {
-        ...state,
-        cartItems: payload,
-      };
-    case CART_ACTION_TYPE.SET_CART_COUNT:
-      return {
-        ...state,
-        cartCount: payload,
-      };
-    case CART_ACTION_TYPE.SET_CART_TOTAL:
-      return {
-        ...state,
-        cartTotal: payload,
-      };
+// const cartReducer = (state, action) => {
+//   const { type, payload } = action;
 
-    default:
-      throw new Error(`Unhandled type ${type} in cartReducer`);
-  }
-};
+//   switch (type) {
+//     case CART_ACTION_TYPE.SET_CART_ITEMS:
+//       return {
+//         ...state,
+//         ...payload,
+//       };
 
-const INITIAL_STATE = {
-  isCartOpen: false,
-  cartItems: [],
-  cartCount: 0,
-  cartTotal: 0,
-};
+//     case CART_ACTION_TYPE.SET_IS_CART_OPEN:
+//       return {
+//         ...state,
+//         isCartOpen: payload,
+//       };
 
-export const CartProvider = ({ children }) => {
-  //replaced by useReducer
-  // const [isCartOpen, setIsCartOpen] = useState(false);
-  // const [cartItems, setCartItems] = useState([]);
-  // const [cartCount, setCartCount] = useState(0);
-  // const [cartTotal, setCartTotal] = useState(0);
+//     default:
+//       throw new Error(`Unhandled type ${type} in cartReducer`);
+//   }
+// };
 
-  //useReducer code start
+// const INITIAL_STATE = {
+//   isCartOpen: false,
+//   cartItems: [],
+//   cartCount: 0,
+//   cartTotal: 0,
+// };
 
-  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
+// Migration to Redux
 
-  const { isCartOpen, cartItems, cartCount, cartTotal } = state;
+// export const CartProvider = ({ children }) => {
+//   //replaced by useReducer
+//   // const [isCartOpen, setIsCartOpen] = useState(false);
+//   // const [cartItems, setCartItems] = useState([]);
+//   // const [cartCount, setCartCount] = useState(0);
+//   // const [cartTotal, setCartTotal] = useState(0);
 
-  const setIsCartOpen = (isCartOpen) => {
-    dispatch({ type: CART_ACTION_TYPE.SET_IS_OPEN_CART, payload: isCartOpen });
-  };
-  const setCartItems = (cartItems) => {
-    dispatch({ type: CART_ACTION_TYPE.SET_CART_ITEMS, payload: cartItems });
-  };
-  const setCartCount = (cartCount) => {
-    dispatch({ type: CART_ACTION_TYPE.SET_CART_COUNT, payload: cartCount });
-  };
-  const setCartTotal = (cartTotal) => {
-    dispatch({ type: CART_ACTION_TYPE.SET_CART_TOTAL, payload: cartTotal });
-  };
+//   //useReducer code start
 
-  //useReducer code end
+//   const [{ isCartOpen, cartItems, cartCount, cartTotal }, dispatch] = useReducer(
+//     cartReducer,
+//     INITIAL_STATE
+//   );
 
-  useEffect(() => {
-    const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
-    setCartCount(newCartCount);
-  }, [cartItems]);
+// const { isCartOpen, cartItems, cartCount, cartTotal } = state;
 
-  useEffect(() => {
-    const newCartTotal = cartItems.reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0);
-    setCartTotal(newCartTotal);
-  }, [cartItems]);
+// const setIsCartOpen = (isCartOpen) => {
+//   dispatch(createAction(CART_ACTION_TYPE.SET_IS_OPEN_CART, isCartOpen));
+// };
+// const setCartItems = (cartItems) => {
+//   dispatch(createAction(CART_ACTION_TYPE.SET_CART_ITEMS, cartItems));
+// };
+// const setCartCount = (cartCount) => {
+//   dispatch(createAction(CART_ACTION_TYPE.SET_CART_COUNT, cartCount));
+// };
+// const setCartTotal = (cartTotal) => {
+//   dispatch(createAction(CART_ACTION_TYPE.SET_CART_TOTAL, cartTotal));
+// };
 
-  const addItemToCart = (productToAdd) => {
-    setCartItems(addCartItem(cartItems, productToAdd));
-  };
+// useEffect(() => {
+//   const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+//   setCartCount(newCartCount);
+// }, [cartItems]);
 
-  const removeItemToCart = (cartItemToRemove) => {
-    setCartItems(removeCartItem(cartItems, cartItemToRemove));
-  };
-  const clearItemFromCart = (cartItemToClear) => {
-    setCartItems(clearCartItem(cartItems, cartItemToClear));
-  };
+// useEffect(() => {
+//   const newCartTotal = cartItems.reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0);
+//   setCartTotal(newCartTotal);
+// }, [cartItems]);
 
-  const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems, cartCount, removeItemToCart, clearItemFromCart, cartTotal };
+//Process to remove useState
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
-};
+// Migrate to Redux
+// const updateCartItemsReducer = (newCartItems) => {
+//   const newCartCount = newCartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+
+//   const newCartTotal = newCartItems.reduce((total, cartItem) => total + cartItem.quantity * cartItem.price, 0);
+
+//   dispatch(
+//     createAction(CART_ACTION_TYPE.SET_CART_ITEMS, {
+//       cartItems: newCartItems,
+//       cartCount: newCartCount,
+//       cartTotal: newCartTotal,
+//     })
+//   );
+// };
+//useReducer code end
+
+// Migrate to Redux
+// const addItemToCart = (productToAdd) => {
+//   //Process to remove useState
+//   // setCartItems(addCartItem(cartItems, productToAdd));
+//   const newCartItems = addCartItem(cartItems, productToAdd);
+//   updateCartItemsReducer(newCartItems);
+// };
+
+// const removeItemToCart = (cartItemToRemove) => {
+//   //Process to remove useState
+//   // setCartItems(removeCartItem(cartItems, cartItemToRemove));
+//   const newCartItems = removeCartItem(cartItems, cartItemToRemove);
+//   updateCartItemsReducer(newCartItems);
+// };
+// const clearItemFromCart = (cartItemToClear) => {
+//   //Process to remove useState
+//   // setCartItems(clearCartItem(cartItems, cartItemToClear));
+//   const newCartItems = clearCartItem(cartItems, cartItemToClear);
+//   updateCartItemsReducer(newCartItems);
+// };
+
+// Migrate to Redux
+
+// const setIsCartOpen = (bool) => {
+//   dispatch(createAction(CART_ACTION_TYPE.SET_IS_CART_OPEN, bool));
+// };
+
+//   const value = {
+//     isCartOpen,
+//     setIsCartOpen,
+//     addItemToCart,
+//     cartItems,
+//     cartCount,
+//     removeItemToCart,
+//     clearItemFromCart,
+//     cartTotal,
+//   };
+
+//   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+// };

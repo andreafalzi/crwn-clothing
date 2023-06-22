@@ -1,4 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react';
+
+import { createAction } from '../utilities/reducer/reducer.utilities';
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from '../utilities/firebase/firebase.utilities';
 
 // as the actual value you want to access
@@ -40,7 +42,7 @@ export const UserProvider = ({ children }) => {
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
 
   const setCurrentUser = (user) => {
-    dispatch({ type: USER_ACTION_TYPE.SET_CURRENT_USER, payload: user });
+    dispatch(createAction(USER_ACTION_TYPE.SET_CURRENT_USER, user));
   };
 
   // useReducer code end
@@ -51,16 +53,18 @@ export const UserProvider = ({ children }) => {
   // signOutUser();
 
   //onAuthStateChanged is a method that firebase provide that keep track of every time that auth change. First we have created this onAuthStateChangedListener() and we are passing it inside a useEffect that mount only one time as the page refresh.
-  useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-      setCurrentUser(user);
-    });
 
-    return unsubscribe;
-  }, []);
+  //Migrating useContext to Redux
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChangedListener((user) => {
+  //     if (user) {
+  //       createUserDocumentFromAuth(user);
+  //     }
+  //     setCurrentUser(user);
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
