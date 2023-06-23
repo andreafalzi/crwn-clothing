@@ -1,4 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 // import logger from 'redux-logger';
 
 import { rootReducer } from './root-reducer';
@@ -21,11 +23,23 @@ const loggerMiddleware = (store) => (next) => (action) => {
   console.log('next state: ', store.getState());
 };
 
-const middleWares = [loggerMiddleware];
+// Set up a config key is the scope, storage is the name, blacklist is what we don't want include in it(user has been included because we wnat to avoid any conflict with firebaseDB)
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['user'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+//Hide logger from production ENV, filter Boolean is necessary to avoid falsy behave and app failing
+const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware].filter(Boolean);
 
 //logger from Redux
 // const middleWares = [logger];
 
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+export const store = createStore(persistedReducer, undefined, composedEnhancers);
+
+export const persistor = persistStore(store);
