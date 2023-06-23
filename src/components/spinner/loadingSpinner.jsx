@@ -1,8 +1,14 @@
 import { Blocks } from 'react-loader-spinner';
 
 const LoadingSpinner = () => {
+  const divStyle = {
+    height: '50dvh',
+    width: '100%',
+    display: 'grid',
+    placeContent: 'center',
+  };
   return (
-    <>
+    <div style={divStyle}>
       <Blocks
         visible={true}
         height='80'
@@ -11,7 +17,7 @@ const LoadingSpinner = () => {
         wrapperStyle={{}}
         wrapperClass='blocks-wrapper'
       />
-    </>
+    </div>
   );
 };
 export default LoadingSpinner;

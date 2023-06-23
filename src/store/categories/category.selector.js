@@ -16,6 +16,12 @@ export const selectCategoriesMap = createSelector([selectCategories], (categorie
   }, {})
 );
 
+//Redux Thunk Async fetching
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  (categoriesSlice) => categoriesSlice.isLoading
+);
+
 //old version w/o caching or memoizing
 // export const selectCategoriesMap = (state) =>
 //   state.categories.categories.reduce((acc, category) => {
